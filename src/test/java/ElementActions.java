@@ -82,6 +82,7 @@ public class ElementActions {
     }
 
     public void uploadFile(By by, String filePath) {
+        clear(by);
         String userHome = System.getProperty("user.dir");
         driver.findElement(by).sendKeys(userHome + File.separator + filePath);
 
