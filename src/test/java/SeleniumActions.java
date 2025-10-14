@@ -1,7 +1,9 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.Test;
 
 public class SeleniumActions {
@@ -11,6 +13,8 @@ public class SeleniumActions {
     By doubleClickButton = By.id("dblClickBtn");
     By imageDrag = By.cssSelector("[alt='my Image']");
     By dropField = By.id("dropZone");
+    By keysField = By.id("target");
+    By textBoxScroll = By.id("scroll_text");
 
     @Test
     public void contextClick(){            // Right click
@@ -57,5 +61,29 @@ public class SeleniumActions {
         actions.clickAndHold(driver.findElement(imageDrag)).moveToElement(driver.findElement(dropField)).release()
                 .perform();
     }
+    @Test
+    public void Keys(){
+        driver = new EdgeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://the-internet.herokuapp.com/key_presses");
+        Actions actions = new Actions(driver);
+        actions.keyDown(Keys.SHIFT).
+                sendKeys(driver.findElement(keysField), "rewan")
+                .perform();
+        resetActions();
+    }
 
+    public void resetActions(){
+        ((RemoteWebDriver) driver).resetInputState();
+    }
+
+    @Test
+    public void scrollingToElement(){   // mouse wheel
+        driver = new EdgeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://ashraaf7.github.io/AA-Practice-Test-Automation/Pages/scrolling.html");
+        Actions actions = new Actions(driver);
+        actions.scrollToElement(driver.findElement(textBoxScroll))
+                .perform();
+    }
 }
